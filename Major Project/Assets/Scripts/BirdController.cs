@@ -1,15 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class BirdController : MonoBehaviour
 {
     public float flapForce = 5f;
     private Rigidbody2D rb;
     private GameManager gameManager;
+    private Animator animator;
     private bool isAlive = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         gameManager = FindFirstObjectByType<GameManager>();
         rb.bodyType = RigidbodyType2D.Kinematic;
     }
@@ -26,6 +29,7 @@ public class BirdController : MonoBehaviour
 
             if (isAlive)
             {
+                animator.SetTrigger("Flap"); 
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(Vector2.up * flapForce, ForceMode2D.Impulse);
             }
